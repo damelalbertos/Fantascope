@@ -7,6 +7,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Hamburger from 'react-native-hamburger';
 import DrawingCanvas from './DrawingCanvas';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import HomeScreen from './HomeScreen';
+
+
+const Stack = createStackNavigator();
 
 const Stack = createStackNavigator();
 
