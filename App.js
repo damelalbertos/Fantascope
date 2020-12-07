@@ -1,18 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { useState } from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, AppState } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Hamburger from 'react-native-hamburger';
 import DrawingCanvas from './DrawingCanvas';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
-import HomeScreen from './HomeScreen';
+// import { createStackNavigator } from '@react-navigation/stack';
+// import { NavigationContainer } from '@react-navigation/native';
+// import HomeScreen from './HomeScreen';
 
 
-const Stack = createStackNavigator();
+// const Stack = createStackNavigator();
 
 const Stack = createStackNavigator();
 
@@ -70,6 +70,18 @@ function OpenScreen({navigation, route}) {
   )
 }
 
+function UselessTextInput(props) {
+      return (
+        <TextInput
+              {...props}
+              autoFocus
+              style={{height:40, borderWidth:1}}
+              editable
+              maxLength = {40}
+          />
+      );
+}
+
 function OptionsScreen({navigation, route}) {
   return (
     <View style={styles.other}>
@@ -80,6 +92,32 @@ function OptionsScreen({navigation, route}) {
 
 
 export default function App() {
+
+
+  //Uset input for file name
+  //Save screen is called within the hamburger
+  //Text input for the file name and then button to save
+  const [userNameInput, setUserInput] = useState('');
+
+  function SaveScreen({navigation,route}) {
+    return (
+      <View style={styles.other}>
+        <Text style={styles.title}>Save</Text>
+        <UselessTextInput
+          multiline
+          numberOfLines = {4}
+          value={userNameInput}
+          onChangeText = {(userNameInput) => setUserInput(userNameInput)}
+        />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={onPress}
+        >
+        <Text>Save File</Text>
+      </TouchableOpacity>
+    </View>
+  )
+}
   return (
     <NavigationContainer
       initialRouteName="Home"
@@ -96,6 +134,10 @@ export default function App() {
         <Drawer.Screen
           name="Open"
           component={OpenScreen}
+        />
+        <Drawer.Save
+          name="Save"
+          component={SaveScreen}
         />
         <Drawer.Screen
           name="Options"
@@ -116,6 +158,11 @@ const styles = StyleSheet.create({
   },
   other: {
     flex: 1
+  },
+  save: {
+    flex:1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     fontSize: 45,
