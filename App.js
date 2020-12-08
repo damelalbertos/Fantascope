@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { useState } from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, AppState } from 'react-native';
+import { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Button, TouchableOpacity, AppState, 
+            FlatList, TextInput } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -62,14 +63,6 @@ function DrawingScreen({navigation, route}) {
   )
 }
 
-function OpenScreen({navigation, route}) {
-  return (
-    <View style={styles.other}>
-      <Text>Open File</Text>
-    </View>
-  )
-}
-
 function UselessTextInput(props) {
       return (
         <TextInput
@@ -92,16 +85,87 @@ function OptionsScreen({navigation, route}) {
 
 
 export default function App() {
+  const [userNameInput, setUserInput] = useState('');
+  const [currID, setCurrID] = useState(1);
+  const [stringID, setStringID] = useState(currID + '')
 
+  const DATA = [];
 
-  //Uset input for file name
+  const [state, setState] = useState({
+    image: null,
+    fileName: '',
+    // strokeColor: Math.random() * 0xffffff,
+    // strokeWidth: Math.random() * 30 + 10,
+    lines: [
+      {
+        points: [{ x: 300, y: 300 }, { x: 600, y: 300 }, { x: 450, y: 600 }, { x: 300, y: 300 }],
+        color: 0xff00ff,
+        alpha: 1,
+        width: 10,
+      },
+    ],
+    appState: AppState.currentState
+  });
+
+  handleAppStateChangeAsync = nextAppState => {
+    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+      setState({ appState: nextAppState, lines: this.sketch.lines });
+        return;
+      }
+      setState({ appState: nextAppState});
+  }
+
+  componentDidMount = () => {
+    AppState.addEventListener('change', this.handleAppStateChangeAsync);
+  }
+
+  componentWillUnmount = () => {
+    AppState.removeEventListener('change', this.handleAppStateChangeAsync);
+  }
+
+  onChangeAsync = async() => {
+    const {uri} = await this.sketch.takeSnapshotAsync();
+
+    setState({
+      image: {uri},
+      fileName: userNameInput,
+      // strokeWidth: Math.random() * 30 + 10,
+      // strokeColor: Math.random() * 0xffffff,
+    });
+  };
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    console.log('You enterered ' + userNameInput + ' that is given the id ' + stringID);
+    }, [DATA]);
+
+  const renderItem = ({ item }) => (
+        <Text style={styles.itemRow}> 
+          {item.title} 
+        </Text>
+      );
+
+  const [origData, setNewData] = useState(DATA);
+
+  const addItem = () => {
+    var newArray = [];
+    newArray = origData.slice();
+    setStringID(currID + ' ');
+    newArray.push({id: stringID, file: state});
+    setNewData(newArray);
+    setCurrID(currID + 1);
+    setStringID(null);
+    setStringID(currID + '');
+  } 
+
+  //Use input for file name
   //Save screen is called within the hamburger
   //Text input for the file name and then button to save
-  const [userNameInput, setUserInput] = useState('');
 
   function SaveScreen({navigation,route}) {
     return (
       <View style={styles.other}>
+        <Text>Save File</Text>
         <Text style={styles.title}>Save</Text>
         <UselessTextInput
           multiline
@@ -111,13 +175,32 @@ export default function App() {
         />
         <TouchableOpacity
           style={styles.button}
-          onPress={onPress}
+          onPress={onPress = () => {
+            onChangeAsync();
+            addItem();
+          }}
         >
         <Text>Save File</Text>
       </TouchableOpacity>
     </View>
-  )
-}
+    )
+  }
+
+  function OpenScreen({navigation, route}) {
+    return (
+      <View style={styles.other}>
+        <Text>Open File</Text>
+        <Text style={styles.title}>Files</Text>
+        <FlatList
+          data = {origData}
+          style = {{flex:3}}
+          renderItem = {renderItem}
+          keyExtractor = {item => item.id}
+        />
+      </View>
+    )
+  }
+
   return (
     <NavigationContainer
       initialRouteName="Home"
@@ -135,7 +218,7 @@ export default function App() {
           name="Open"
           component={OpenScreen}
         />
-        <Drawer.Save
+        <Drawer.Screen
           name="Save"
           component={SaveScreen}
         />
