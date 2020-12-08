@@ -7,12 +7,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Hamburger from 'react-native-hamburger';
 import DrawingCanvas from './DrawingCanvas';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
-import HomeScreen from './HomeScreen';
-
-
-const Stack = createStackNavigator();
 
 const Stack = createStackNavigator();
 
@@ -65,6 +59,14 @@ function DrawingScreen({navigation, route}) {
 function OpenScreen({navigation, route}) {
   return (
     <View style={styles.other}>
+      <View style={styles.hamburger}>
+        <Hamburger
+          active={open}
+          type="cross"
+          style={styles.hamburger}
+          onPress={() => {navigation.openDrawer(); setOpen(!open);}}
+        />        
+      </View>
       <Text>Open File</Text>
     </View>
   )
