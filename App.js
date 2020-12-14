@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, AppState, 
+import { StyleSheet, Text, View, Button, TouchableOpacity, 
             FlatList, TextInput } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -13,6 +13,7 @@ import drawingReducer from './DrawingReducer'
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import * as ExpoPixi from 'expo-pixi';
+import { drawImage } from './DrawingActions';
 
 const Stack = createStackNavigator();
 const store = createStore(drawingReducer)
@@ -132,7 +133,7 @@ export default function App() {
     var newArray = [];
     newArray = origData.slice();
     setStringID(currID + ' ');
-    newArray.push({id: stringID, file: state});
+    newArray.push({id: stringID, file: drawImage});
     setNewData(newArray);
     setCurrID(currID + 1);
     setStringID(null);
@@ -157,7 +158,7 @@ export default function App() {
         <TouchableOpacity
           style={styles.button}
           onPress={onPress = () => {
-            
+            setStringID(userNameInput);
             addItem();
           }}
         >

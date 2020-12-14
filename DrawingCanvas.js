@@ -1,12 +1,13 @@
 import React from 'react';
 import * as ExpoPixi from 'expo-pixi';
-import { StyleSheet, View, AppState } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import {drawImage} from './DrawingActions'
+import * as reducer from './DrawingReducer'
 
-export const DrawingCanvas = (state = INITIAL_State, action) => {
+export const DrawingCanvas = () => {
     return (
         <View style={styles.canvas}>
             <ExpoPixi.Sketch
@@ -15,6 +16,7 @@ export const DrawingCanvas = (state = INITIAL_State, action) => {
                 strokeColor={0xff00ff}
                 strokeWidth={35}
                 strokeAlpha={0.5}
+                onChange = {onChangeAsync.reducer}
             />
         </View>
                 
