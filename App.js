@@ -7,7 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Hamburger from 'react-native-hamburger';
-import DrawingCanvas from './DrawingCanvas';
+import { DrawingCanvas } from './DrawingCanvas';
 import * as ExpoPixi from 'expo-pixi';
 
 const Stack = createStackNavigator();
@@ -40,25 +40,6 @@ function HomeScreen({navigation, route}) {
   );
 }
 
-function DrawingScreen({navigation, route}) {
-  const [open, setOpen] = useState(false);
-  return (
-    <View style={styles.other}>
-      <DrawingCanvas/>
-      
-      <View style={styles.hamburger}>
-        <Hamburger
-          active={open}
-          type="cross"
-          style={styles.hamburger}
-          onPress={() => {navigation.openDrawer(); setOpen(!open);}}
-        />        
-      </View>
-
-    </View>
-  )
-}
-
 function UselessTextInput(props) {
       return (
         <TextInput
@@ -87,48 +68,48 @@ export default function App() {
 
   const DATA = [];
 
-  const [state, setState] = useState({
-    image: null,
-    fileName: '',
-    strokeColor: Math.random() * 0xffffff,
-    strokeWidth: Math.random() * 30 + 10,
-    lines: [
-      {
-        points: [{ x: 300, y: 300 }, { x: 600, y: 300 }, { x: 450, y: 600 }, { x: 300, y: 300 }],
-        color: 0xff00ff,
-        alpha: 1,
-        width: 10,
-      },
-    ],
-    appState: AppState.currentState
-  });
+  // const [state, setState] = useState({
+  //   image: null,
+  //   fileName: '',
+  //   strokeColor: Math.random() * 0xffffff,
+  //   strokeWidth: Math.random() * 30 + 10,
+  //   lines: [
+  //     {
+  //       points: [{ x: 300, y: 300 }, { x: 600, y: 300 }, { x: 450, y: 600 }, { x: 300, y: 300 }],
+  //       color: 0xff00ff,
+  //       alpha: 1,
+  //       width: 10,
+  //     },
+  //   ],
+  //   appState: AppState.currentState
+  // });
 
-  handleAppStateChangeAsync = nextAppState => {
-    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-      setState({ appState: nextAppState, lines: this.sketch.lines });
-        return;
-      }
-      setState({ appState: nextAppState});
-  }
+  // handleAppStateChangeAsync = nextAppState => {
+  //   if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+  //     setState({ appState: nextAppState, lines: this.sketch.lines });
+  //       return;
+  //     }
+  //     setState({ appState: nextAppState});
+  // }
 
-  componentDidMount = () => {
-    AppState.addEventListener('change', this.handleAppStateChangeAsync);
-  }
+  // componentDidMount = () => {
+  //   AppState.addEventListener('change', this.handleAppStateChangeAsync);
+  // }
 
-  componentWillUnmount = () => {
-    AppState.removeEventListener('change', this.handleAppStateChangeAsync);
-  }
+  // componentWillUnmount = () => {
+  //   AppState.removeEventListener('change', this.handleAppStateChangeAsync);
+  // }
 
-  onChangeAsync = async(prop) => {
-    const {uri} = await sketch.takeSnapshotAsync();
+  // onChangeAsync = async(prop) => {
+  //   const {uri} = await sketch.takeSnapshotAsync();
 
-    setState({
-      image: {uri},
-      fileName: userNameInput,
-      strokeWidth: Math.random() * 30 + 10,
-      strokeColor: Math.random() * 0xffffff,
-    });
-  };
+  //   setState({
+  //     image: {uri},
+  //     fileName: userNameInput,
+  //     strokeWidth: Math.random() * 30 + 10,
+  //     strokeColor: Math.random() * 0xffffff,
+  //   });
+  // };
 
   useEffect(() => {
     // Update the document title using the browser API
@@ -172,7 +153,7 @@ export default function App() {
         <TouchableOpacity
           style={styles.button}
           onPress={onPress = () => {
-            onChangeAsync();
+            
             addItem();
           }}
         >
@@ -193,6 +174,24 @@ export default function App() {
           renderItem = {renderItem}
           keyExtractor = {item => item.id}
         />
+      </View>
+    )
+  }
+
+  function DrawingScreen({navigation, route}) {
+    const [open, setOpen] = useState(false);
+    return (
+      <View style={styles.other}>
+        <DrawingCanvas />
+        <View style={styles.hamburger}>
+          <Hamburger
+            active={open}
+            type="cross"
+            style={styles.hamburger}
+            onPress={() => {navigation.openDrawer(); setOpen(!open);}}
+          />        
+        </View>
+  
       </View>
     )
   }
