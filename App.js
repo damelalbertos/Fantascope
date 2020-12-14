@@ -8,10 +8,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Hamburger from 'react-native-hamburger';
 import { DrawingCanvas } from './DrawingCanvas';
+import drawingReducer from './DrawingReducer'
+
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 import * as ExpoPixi from 'expo-pixi';
 
 const Stack = createStackNavigator();
-
+const store = createStore(drawingReducer)
 const Drawer = createDrawerNavigator();
 
 function buildButton(title, onPress) {
@@ -197,34 +201,36 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer
-      initialRouteName="Home"
-    >
-      <Drawer.Navigator>
-        <Drawer.Screen
-          name="Home"
-          component={HomeScreen}
-        />
-        <Drawer.Screen
-          name="Draw"
-          component={DrawingScreen}
-          initialParams = {{prop: DrawingCanvas}}
-        />
-        <Drawer.Screen
-          name="Open"
-          component={OpenScreen}
-        />
-        <Drawer.Screen
-          name="Save"
-          component={SaveScreen}
-        />
-        <Drawer.Screen
-          name="Options"
-          component={OptionsScreen}
-        />
-      </Drawer.Navigator>
+    <Provider store = {store}>
+      <NavigationContainer
+        initialRouteName="Home"
+      >
+        <Drawer.Navigator>
+          <Drawer.Screen
+            name="Home"
+            component={HomeScreen}
+          />
+          <Drawer.Screen
+            name="Draw"
+            component={DrawingScreen}
+            initialParams = {{prop: DrawingCanvas}}
+          />
+          <Drawer.Screen
+            name="Open"
+            component={OpenScreen}
+          />
+          <Drawer.Screen
+            name="Save"
+            component={SaveScreen}
+          />
+          <Drawer.Screen
+            name="Options"
+            component={OptionsScreen}
+          />
+        </Drawer.Navigator>
       
-    </NavigationContainer>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
