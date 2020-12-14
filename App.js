@@ -8,6 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Hamburger from 'react-native-hamburger';
 import DrawingCanvas from './DrawingCanvas';
+import * as ExpoPixi from 'expo-pixi';
 // import { createStackNavigator } from '@react-navigation/stack';
 // import { NavigationContainer } from '@react-navigation/native';
 // import HomeScreen from './HomeScreen';
@@ -50,6 +51,7 @@ function DrawingScreen({navigation, route}) {
   return (
     <View style={styles.other}>
       <DrawingCanvas/>
+      
       <View style={styles.hamburger}>
         <Hamburger
           active={open}
@@ -94,8 +96,8 @@ export default function App() {
   const [state, setState] = useState({
     image: null,
     fileName: '',
-    // strokeColor: Math.random() * 0xffffff,
-    // strokeWidth: Math.random() * 30 + 10,
+    strokeColor: Math.random() * 0xffffff,
+    strokeWidth: Math.random() * 30 + 10,
     lines: [
       {
         points: [{ x: 300, y: 300 }, { x: 600, y: 300 }, { x: 450, y: 600 }, { x: 300, y: 300 }],
@@ -123,14 +125,14 @@ export default function App() {
     AppState.removeEventListener('change', this.handleAppStateChangeAsync);
   }
 
-  onChangeAsync = async() => {
-    const {uri} = await this.sketch.takeSnapshotAsync();
+  onChangeAsync = async(prop) => {
+    const {uri} = await sketch.takeSnapshotAsync();
 
     setState({
       image: {uri},
       fileName: userNameInput,
-      // strokeWidth: Math.random() * 30 + 10,
-      // strokeColor: Math.random() * 0xffffff,
+      strokeWidth: Math.random() * 30 + 10,
+      strokeColor: Math.random() * 0xffffff,
     });
   };
 
@@ -213,6 +215,7 @@ export default function App() {
         <Drawer.Screen
           name="Draw"
           component={DrawingScreen}
+          initialParams = {{prop: DrawingCanvas}}
         />
         <Drawer.Screen
           name="Open"
@@ -266,5 +269,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 30,
     left: 15
+  },
+  sketch: {
+    flex: 1
+  },
+  sketchContain: {
+    height: '50%'
   }
 });
+
+//Get redux working in app
+//Get it working - Save something
