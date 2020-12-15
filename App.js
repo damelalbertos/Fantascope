@@ -84,6 +84,9 @@ function SaveScreen({navigation,route}) {
           setStringID(userNameInput);
           props.drawImage(setStringID);
           sketchHandler(sketchSave.lines);
+          setCurrID(currID + 1);
+          setStringID(null);
+          setStringID(currID + '');
         }}
       >
       <Text>Save File</Text>
