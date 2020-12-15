@@ -79,7 +79,7 @@ function SaveScreen({navigation,route}) {
         onPress={onPress = () => {
           setStringID(userNameInput);
           props.drawImage(setStringID);
-          sketchHandler(data.sketchSave.lines);
+          sketchHandler(sketchSave.lines);
         }}
       >
       <Text>Save File</Text>
@@ -94,7 +94,7 @@ function OpenScreen({navigation, route}) {
       <Text>Open File</Text>
       <Text style={styles.title}>Files</Text>
       <FlatList
-        data = {origData}
+        data = {{sketchSave}}
         style = {{flex:3}}
         renderItem = {renderItem}
         keyExtractor = {item => item.id}
