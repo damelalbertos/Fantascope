@@ -8,6 +8,7 @@ import HomeScreen from './Components/HomeScreen';
 import OpenScreen from './Components/OpenScreen';
 import OptionsScreen from './Components/OptionsScreen';
 import DrawingScreen from './Components/DrawingScreen';
+import SaveScreen from './Components/SaveScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -36,6 +37,10 @@ export default function App() {
         <Drawer.Screen
           name="Open"
           component={OpenScreen}
+        />
+        <Drawer.Screen
+          name="Save"
+          component={SaveScreen}
         />
         <Drawer.Screen
           name="Options"
