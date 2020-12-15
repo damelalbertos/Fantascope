@@ -1,20 +1,26 @@
 import React, { useState } from 'react';
 import * as ExpoPixi from 'expo-pixi';
 import { StyleSheet, View } from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import {Picker} from '@react-native-picker/picker';
 
 
-const DrawingCanvas = () => {
+import {drawImage} from './DrawingActions'
+import * as reducer from './DrawingReducer'
 
+export const DrawingCanvas = () => {
     const [strokeColor, setStrokeColor] = useState(0x000000);
     return (
         <View style={styles.canvas}>
             <ExpoPixi.Sketch
+                sketchSave = {ref}
                 style={styles.canvas}
                 strokeColor={strokeColor}
                 strokeWidth={35}
                 strokeAlpha={0.5}
+                onChange = {onChangeAsync.reducer}
             />
             {/* <View style={styles.colorSelection}>
                 <TouchableOpacity onPress={()=>setStrokeColor()}>
@@ -35,11 +41,12 @@ const DrawingCanvas = () => {
                 </Picker>
             </View>
         </View>
-        
+                
     );
 }
 
-export default DrawingCanvas;
+
+// export default DrawingCanvas;
 
 const styles = StyleSheet.create({
     canvas: {
@@ -50,3 +57,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     }
 });
+
+const mapStateToProps = (state) => {
+    const { sketchSave } = state
+    return { sketchSave }
+}
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({
+        drawImage,
+    }, dispatch)
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(DrawingCanvas)
