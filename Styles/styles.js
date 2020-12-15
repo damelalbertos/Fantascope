@@ -32,6 +32,13 @@ export const styles = StyleSheet.create({
       position: 'absolute',
       top: 30,
       left: 15
+    },
+    canvas: {
+        width: '100%',
+        flex: 1
+    },
+    colorSelection: {
+        flexDirection: 'row',
     }
   });
   

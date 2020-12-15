@@ -3,6 +3,7 @@ import * as ExpoPixi from 'expo-pixi';
 import { StyleSheet, View } from 'react-native';
 import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import {Picker} from '@react-native-picker/picker';
+import styles from '../Styles/styles';
 
 
 const DrawingCanvas = () => {
@@ -40,13 +41,3 @@ const DrawingCanvas = () => {
 }
 
 export default DrawingCanvas;
-
-const styles = StyleSheet.create({
-    canvas: {
-        width: '100%',
-        flex: 1
-    },
-    colorSelection: {
-        flexDirection: 'row',
-    }
-});
