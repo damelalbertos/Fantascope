@@ -35,8 +35,12 @@ export const styles = StyleSheet.create({
     },
     hamburger: {
       position: 'absolute',
-      top: 30,
-      left: 15
+      top: 40,
+      left: 20
+    },
+    hamburgerIcon: {
+      width: 40,
+      height: 40
     },
     canvas: {
         width: '100%',
