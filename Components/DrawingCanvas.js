@@ -12,14 +12,14 @@ const DrawingCanvas = (props) => {
     const sketchRef = useRef();
 
 
-    useEffect(() => {
-        // console.log(lines);
+    const updateState = () => {
+        console.log(lines);
         return (() => setState({
-            lines: sketchRef.lines,
+            lines: sketchRef.current.lines,
             strokeWidth: strokeWidth,
             strokeColor: strokeColor
         }));
-    });
+    };
 
     return (
         <View style={styles.canvas}>
@@ -30,13 +30,14 @@ const DrawingCanvas = (props) => {
                 strokeWidth={strokeWidth}
                 strokeAlpha={1}
                 // initialLines={lines}
+                onChange={() => updateState()}
             />
             <BrushOptionsMenu
                 state={state}
                 strokeWidth={strokeWidth}
                 onColorChange={(color) => setStrokeColor(parseInt(color.substring(1), 16))}
                 onStrokeWidthChange={(value) => setStrokeWidth(value)}
-                undo={() => console.log("Undoing!")}
+                undo={() => sketchRef.current.undo()}
             />
         </View>
     );
