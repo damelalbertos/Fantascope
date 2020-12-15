@@ -38,7 +38,18 @@ export const styles = StyleSheet.create({
         flex: 1
     },
     colorSelection: {
-        flexDirection: 'row',
+        position: 'absolute',
+        width: 250,
+        backgroundColor: '#ffffff',
+        top: 35,
+        right: 15,
+        padding: 15,
+        borderRadius: 5
+    },
+    colorTriangle: {
+      width: '100%',
+      height: 250,
+      marginBottom: 15
     }
   });
   
