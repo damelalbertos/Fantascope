@@ -21,6 +21,10 @@ const Stack = createStackNavigator();
 const store = createStore(drawingReducer)
 const Drawer = createDrawerNavigator();
 
+const [userNameInput, setUserInput] = useState('');
+const [currID, setCurrID] = useState(1);
+const [stringID, setStringID] = useState(currID + '')
+
 function buildButton(title, onPress) {
   return (
     <TouchableOpacity
@@ -113,39 +117,6 @@ function OptionsScreen({navigation, route}) {
 
 
 export default function App() {
-  const [userNameInput, setUserInput] = useState('');
-  const [currID, setCurrID] = useState(1);
-  const [stringID, setStringID] = useState(currID + '')
-
-  const DATA = [];
-
-  useEffect(() => {
-    // Update the document title using the browser API
-    console.log('You enterered ' + userNameInput + ' that is given the id ' + stringID);
-    }, [DATA]);
-
-  const renderItem = ({ item }) => (
-        <Text style={styles.itemRow}> 
-          {item.title} 
-        </Text>
-      );
-
-  const [origData, setNewData] = useState(DATA);
-
-  const addItem = () => {
-    var newArray = [];
-    newArray = origData.slice();
-    setStringID(currID + ' ');
-    newArray.push({id: stringID, file: drawImage});
-    setNewData(newArray);
-    setCurrID(currID + 1);
-    setStringID(null);
-    setStringID(currID + '');
-  } 
-
-  //Use input for file name
-  //Save screen is called within the hamburger
-  //Text input for the file name and then button to save
 
   function DrawingScreen({navigation, route}) {
     const [open, setOpen] = useState(false);
