@@ -8,9 +8,9 @@ import styles from '../Styles/styles';
 
 
 export default function BrushOptionsMenu(props) {
+    const { state, strokeWidth, onColorChange, onStrokeWidthChange } = props;
     const [isOpen, setIsOpen] = useState(false);
-    const [stringColor, setStringColor] = useState("#774488");
-    const { strokeWidth, onColorChange, onStrokeWidthChange } = props;
+    const [stringColor, setStringColor] = useState(state.strokeColor);
 
     function colorButton() {
         return (
