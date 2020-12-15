@@ -9,11 +9,12 @@ const DrawingCanvas = (props) => {
     const {lines, strokeWidth: stateStrokeWidth, strokeColor: stateStrokeColor} = state;
     const [strokeColor, setStrokeColor] = useState(parseInt(stateStrokeColor.substring(1), 16));
     const [strokeWidth, setStrokeWidth] = useState(stateStrokeWidth);
-    let sketchRef = useRef();
+    const sketchRef = useRef();
 
 
     useEffect(() => {
-       return (() => setState({
+        // console.log(lines);
+        return (() => setState({
             lines: sketchRef.lines,
             strokeWidth: strokeWidth,
             strokeColor: strokeColor
@@ -35,6 +36,7 @@ const DrawingCanvas = (props) => {
                 strokeWidth={strokeWidth}
                 onColorChange={(color) => setStrokeColor(parseInt(color.substring(1), 16))}
                 onStrokeWidthChange={(value) => setStrokeWidth(value)}
+                undo={() => console.log("Undoing!")}
             />
         </View>
     );
