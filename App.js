@@ -7,18 +7,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Hamburger from 'react-native-hamburger';
-import { DrawingCanvas } from './DrawingCanvas';
-import drawingReducer from './DrawingReducer'
-
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as ExpoPixi from 'expo-pixi';
-import { drawImage } from './DrawingActions';
+import DrawingCanvas from './DrawingCanvas';
 
 const Stack = createStackNavigator();
-const store = createStore(drawingReducer)
+
 const Drawer = createDrawerNavigator();
 
 const [userNameInput, setUserInput] = useState('');
@@ -98,6 +90,14 @@ function SaveScreen({navigation,route}) {
 function OpenScreen({navigation, route}) {
   return (
     <View style={styles.other}>
+      <View style={styles.hamburger}>
+        <Hamburger
+          active={open}
+          type="cross"
+          style={styles.hamburger}
+          onPress={() => {navigation.openDrawer(); setOpen(!open);}}
+        />        
+      </View>
       <Text>Open File</Text>
       <Text style={styles.title}>Files</Text>
       <FlatList
