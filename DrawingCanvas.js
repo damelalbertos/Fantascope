@@ -11,7 +11,7 @@ export const DrawingCanvas = () => {
     return (
         <View style={styles.canvas}>
             <ExpoPixi.Sketch
-                ref={ref => sketchSave = ref}
+                sketchSave = {ref}
                 style={styles.canvas}
                 strokeColor={0xff00ff}
                 strokeWidth={35}

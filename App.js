@@ -12,6 +12,8 @@ import drawingReducer from './DrawingReducer'
 
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as ExpoPixi from 'expo-pixi';
 import { drawImage } from './DrawingActions';
 
@@ -57,6 +59,50 @@ function UselessTextInput(props) {
       );
 }
 
+function sketchHandler(sketch) {
+  mapStateToProps(sketch.lines)
+}
+
+function SaveScreen({navigation,route}) {
+  return (
+    <View style={styles.other}>
+      <Text>Save File</Text>
+      <Text style={styles.title}>Save</Text>
+      <UselessTextInput
+        multiline
+        numberOfLines = {4}
+        value={userNameInput}
+        onChangeText = {(userNameInput) => setUserInput(userNameInput)}
+      />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={onPress = () => {
+          setStringID(userNameInput);
+          props.drawImage(setStringID);
+          sketchHandler(data.sketchSave.lines);
+        }}
+      >
+      <Text>Save File</Text>
+    </TouchableOpacity>
+  </View>
+  )
+}
+
+function OpenScreen({navigation, route}) {
+  return (
+    <View style={styles.other}>
+      <Text>Open File</Text>
+      <Text style={styles.title}>Files</Text>
+      <FlatList
+        data = {origData}
+        style = {{flex:3}}
+        renderItem = {renderItem}
+        keyExtractor = {item => item.id}
+      />
+    </View>
+  )
+}
+
 function OptionsScreen({navigation, route}) {
   return (
     <View style={styles.other}>
@@ -72,49 +118,6 @@ export default function App() {
   const [stringID, setStringID] = useState(currID + '')
 
   const DATA = [];
-
-  // const [state, setState] = useState({
-  //   image: null,
-  //   fileName: '',
-  //   strokeColor: Math.random() * 0xffffff,
-  //   strokeWidth: Math.random() * 30 + 10,
-  //   lines: [
-  //     {
-  //       points: [{ x: 300, y: 300 }, { x: 600, y: 300 }, { x: 450, y: 600 }, { x: 300, y: 300 }],
-  //       color: 0xff00ff,
-  //       alpha: 1,
-  //       width: 10,
-  //     },
-  //   ],
-  //   appState: AppState.currentState
-  // });
-
-  // handleAppStateChangeAsync = nextAppState => {
-  //   if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-  //     setState({ appState: nextAppState, lines: this.sketch.lines });
-  //       return;
-  //     }
-  //     setState({ appState: nextAppState});
-  // }
-
-  // componentDidMount = () => {
-  //   AppState.addEventListener('change', this.handleAppStateChangeAsync);
-  // }
-
-  // componentWillUnmount = () => {
-  //   AppState.removeEventListener('change', this.handleAppStateChangeAsync);
-  // }
-
-  // onChangeAsync = async(prop) => {
-  //   const {uri} = await sketch.takeSnapshotAsync();
-
-  //   setState({
-  //     image: {uri},
-  //     fileName: userNameInput,
-  //     strokeWidth: Math.random() * 30 + 10,
-  //     strokeColor: Math.random() * 0xffffff,
-  //   });
-  // };
 
   useEffect(() => {
     // Update the document title using the browser API
@@ -143,45 +146,6 @@ export default function App() {
   //Use input for file name
   //Save screen is called within the hamburger
   //Text input for the file name and then button to save
-
-  function SaveScreen({navigation,route}) {
-    return (
-      <View style={styles.other}>
-        <Text>Save File</Text>
-        <Text style={styles.title}>Save</Text>
-        <UselessTextInput
-          multiline
-          numberOfLines = {4}
-          value={userNameInput}
-          onChangeText = {(userNameInput) => setUserInput(userNameInput)}
-        />
-        <TouchableOpacity
-          style={styles.button}
-          onPress={onPress = () => {
-            setStringID(userNameInput);
-            addItem();
-          }}
-        >
-        <Text>Save File</Text>
-      </TouchableOpacity>
-    </View>
-    )
-  }
-
-  function OpenScreen({navigation, route}) {
-    return (
-      <View style={styles.other}>
-        <Text>Open File</Text>
-        <Text style={styles.title}>Files</Text>
-        <FlatList
-          data = {origData}
-          style = {{flex:3}}
-          renderItem = {renderItem}
-          keyExtractor = {item => item.id}
-        />
-      </View>
-    )
-  }
 
   function DrawingScreen({navigation, route}) {
     const [open, setOpen] = useState(false);
@@ -277,6 +241,19 @@ const styles = StyleSheet.create({
     height: '50%'
   }
 });
+
+const mapStateToProps = (state) => {
+  const { sketchSave } = state
+  return { sketchSave }
+}
+
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+      drawImage,
+  }, dispatch)
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
 
 //Get redux working in app
 //Get it working - Save something

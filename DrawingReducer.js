@@ -2,7 +2,7 @@ import * as ExpoPixi from 'expo-pixi';
 import { StyleSheet, View, AppState, Image } from 'react-native';
 import { combineReducers } from 'redux';
 
-import {ref} from './DrawingCanvas'
+import {saveSketch} from './DrawingCanvas'
 import {userNameInput} from './App'
 
 
@@ -18,7 +18,7 @@ const drawingReducer = (state = INITIAL_State, action) => {
     switch (action.type) {
         case 'DRAW_IMAGE':
             const [state, setState] = useState({
-                image: ref,
+                image:saveSketch,
                 fileName: '',
                 strokeColor: Math.random() * 0xffffff,
                 strokeWidth: Math.random() * 30 + 10,
@@ -35,7 +35,7 @@ const drawingReducer = (state = INITIAL_State, action) => {
             
             const handleAppStateChangeAsync = nextAppState => {
                 if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-                    setState({ appState: nextAppState, lines: this.sketch.lines });
+                    setState({ appState: nextAppState, lines: sketch.lines });
                     return;
                 }
                 setState({ appState: nextAppState});
@@ -60,14 +60,14 @@ const drawingReducer = (state = INITIAL_State, action) => {
                 });
             };
 
-            const newSketch = {key: current.fileName, sketch: image};
+            const newSketch = {key: current.fileName, sketch: image.sketch.lines};
             current.push(newSketch);
             const newState = {current};
 
             return newState;
 
         default:
-            return actionState
+            return actionState;
     }
 };
 
