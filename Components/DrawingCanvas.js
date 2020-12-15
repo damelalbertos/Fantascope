@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import * as ExpoPixi from 'expo-pixi';
-import { StyleSheet, View } from 'react-native';
-import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
-import {Picker} from '@react-native-picker/picker';
+import { View } from 'react-native';
 import styles from '../Styles/styles';
 import BrushOptionsMenu from './BrushOptionsMenu';
 
@@ -19,11 +17,6 @@ const DrawingCanvas = () => {
                 strokeWidth={strokeWidth}
                 strokeAlpha={1}
             />
-            {/* <View style={styles.colorSelection}>
-                <TouchableOpacity onPress={()=>setStrokeColor()}>
-
-                </TouchableOpacity>
-            </View> */}
             <BrushOptionsMenu
                 strokeWidth={strokeWidth}
                 onColorChange={(color) => setStrokeColor(parseInt(color.substring(1), 16))}

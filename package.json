@@ -14,7 +14,6 @@
     "@react-navigation/drawer": "^5.11.4",
     "@react-navigation/native": "^5.8.10",
     "@react-navigation/stack": "^5.12.8",
-    "@wwimmo/react-native-sketch-canvas": "git+https://github.com/wwimmo/react-native-sketch-canvas.git",
     "expo": "^39.0.5",
     "expo-gl": "~9.1.1",
     "expo-pixi": "^1.2.0",
