@@ -24,9 +24,14 @@ export const styles = StyleSheet.create({
     },
     button: {
       alignItems: "center",
-      backgroundColor: "#DDDDDD",
+      backgroundColor: "#888888",
       padding: 15,
-      margin: 3
+      margin: 3,
+      borderRadius: 5
+    },
+    buttonText: {
+      color: '#eeeeee',
+      fontSize: 18
     },
     hamburger: {
       position: 'absolute',

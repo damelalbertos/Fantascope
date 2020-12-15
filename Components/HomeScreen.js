@@ -25,7 +25,7 @@ function buildButton(title, onPress) {
         style={styles.button}
         onPress={onPress}
       >
-        <Text>{title}</Text>
+        <Text style={styles.buttonText}>{title}</Text>
       </TouchableOpacity>
     );
 }
