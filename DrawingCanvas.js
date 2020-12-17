@@ -15,12 +15,12 @@ export const DrawingCanvas = () => {
     return (
         <View style={styles.canvas}>
             <ExpoPixi.Sketch
-                sketchSave = {ref}
+                ref= {(ref) => sketchSave = ref}
                 style={styles.canvas}
                 strokeColor={strokeColor}
                 strokeWidth={35}
                 strokeAlpha={0.5}
-                onChange = {onChangeAsync.reducer}
+                onChange = {() => drawImage(sketchSave)}
             />
             {/* <View style={styles.colorSelection}>
                 <TouchableOpacity onPress={()=>setStrokeColor()}>
