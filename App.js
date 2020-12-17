@@ -10,7 +10,7 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import Hamburger from 'react-native-hamburger';
 import DrawingCanvas from './DrawingCanvas';
-import DrawingReducer from './DrawingReducer';
+import drawingReducer from './DrawingReducer';
 import DrawingActions from './DrawingActions';
 
 const Stack = createStackNavigator();
