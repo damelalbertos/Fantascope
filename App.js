@@ -6,11 +6,15 @@ import { StyleSheet, Text, View, Button, TouchableOpacity,
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 import Hamburger from 'react-native-hamburger';
 import DrawingCanvas from './DrawingCanvas';
+import DrawingReducer from './DrawingReducer';
+import DrawingActions from './DrawingActions';
 
 const Stack = createStackNavigator();
-
+const store = createStore(drawingReducer);
 const Drawer = createDrawerNavigator();
 
 const [userNameInput, setUserInput] = useState('');
