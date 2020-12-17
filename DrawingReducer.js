@@ -8,11 +8,13 @@ import {userNameInput} from './App'
 
 const INITIAL_State = {
     current: [],
+    possible: [],
 };
 
 const drawingReducer = (state = INITIAL_State, action) => {
     const {
         current,
+        possible,
     } = actionState;
 
     switch (action.type) {
@@ -60,7 +62,9 @@ const drawingReducer = (state = INITIAL_State, action) => {
                 });
             };
 
-            const newSketch = {key: current.fileName, sketch: saveSketch.lines};
+            const addedLines = possible.splice(action.payload, 1);
+
+            const newSketch = {key: current.fileName, sketch: addedLines.lines};
             current.push(newSketch);
             const newState = {current};
 
