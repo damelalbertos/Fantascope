@@ -60,14 +60,14 @@ const drawingReducer = (state = INITIAL_State, action) => {
                 });
             };
 
-            const newSketch = {key: current.fileName, sketch: image.sketch.lines};
+            const newSketch = {key: current.fileName, sketch: saveSketch.lines};
             current.push(newSketch);
             const newState = {current};
 
             return newState;
 
         default:
-            return actionState;
+            return actionState
     }
 };
 
