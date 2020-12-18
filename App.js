@@ -231,7 +231,7 @@ const mapDispatchToProps = dispatch => (
   }, dispatch)
 );
 
-connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)
 
 //Get redux working in app
 //Get it working - Save something
